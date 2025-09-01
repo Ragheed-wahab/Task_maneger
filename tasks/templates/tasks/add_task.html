@@ -1,0 +1,22 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'tasks/add.css' %}">
+
+<h1><p>Add a new task to do !!</p></h1>
+<form method="post" action="{% url 'add_task' %}">
+    {% csrf_token %}
+    <label >Title:</label><br>
+    <input type="text" name="title" placeholder="title" required><br>
+
+    <label >Description:</label><br>
+    <textarea name="description" placeholder="Description"></textarea><br>
+
+    <label >Status : </label>
+    <input  type="checkbox" name="state" />Done<br>
+
+    <label>Deadline :</label><br>
+    <input type="date" name="date" required/><br>
+    <div class="button-container">
+        <button type="submit">save</button>
+    </div>
+</form>
+<p><a href="{% url 'task_list' %}">Back to Task List</a></p>

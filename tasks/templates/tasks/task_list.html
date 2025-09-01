@@ -1,0 +1,44 @@
+{% load static%}
+<link rel="stylesheet" href="{% static 'tasks/list.css' %}">
+
+
+<h1>Tasks List</h1>
+<ul>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Progress</th>
+                <th>Deadline</th>
+                <th>Description</th>
+                <th>End the task</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in tasks %}
+                <tr> 
+                    <td> {{ t.title }} </td>
+                    <td> 
+                        <label>
+                            <input type="checkbox" {% if t.completed %}checked{% endif %} />
+                            Done
+                        </label>
+                    </td>
+                    <td> {{ t.deadline }} </td>
+                    <td> {{ t.description }} </td>
+                    <td>
+                        <form method="post" action="{% url 'delete_task' t.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="delete-btn" onclick="return confirm('Delete this task?')">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                    {% empty %}
+                    <p>no tasks yet !</p>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</ul>
+<a href="{% url 'add_task' %}">Add Task</a><br>
